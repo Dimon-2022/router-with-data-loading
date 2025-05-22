@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
-import { products } from "../data/data";
+// import { products } from "../data/data";
 
 function ProductDetails() {
   const { productId } = useParams();
 
-  const product = products.find((p) => p.id === parseInt(productId, 10));
+  // const product = products.find((p) => p.id === parseInt(productId, 10));
 
-  console.log(product);
+  const products =  [];
 
   return (
     <div className="px-6 py-10">
