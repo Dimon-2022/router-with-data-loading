@@ -1,14 +1,21 @@
-import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
-import { products } from "../data/data";
+import {
+  Link,
+  useLoaderData,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 function Category() {
   const { categoryId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
-  console.log(location);
+  const products = useLoaderData();
 
-  const maxPrice = searchParams.get("maxPrice") ? Number(searchParams.get("maxPrice")) : Infinity;
+  const maxPrice = searchParams.get("maxPrice")
+    ? Number(searchParams.get("maxPrice"))
+    : Infinity;
   // const maxPrice = location.state.maxPrice;
 
   const currentCategoryArray = products.filter(
@@ -19,12 +26,19 @@ function Category() {
     const value = e.target.value;
     setSearchParams(value ? { maxPrice: value } : {});
   }
+  const category = useLoaderData();
+  console.log(category);
 
   return (
     <div className="px-6 py-10">
-      <h1 className="mb-6 text-3xl font-semibold text-center">Category {categoryId}</h1>
+      <h1 className="mb-6 text-3xl font-semibold text-center">
+        Category {categoryId}
+      </h1>
       <div className="mb-4">
-        <label className="block mb-2 text-sm font-medium text-gray-700" htmlFor="maxPrice">
+        <label
+          className="block mb-2 text-sm font-medium text-gray-700"
+          htmlFor="maxPrice"
+        >
           Max Price{" "}
         </label>
         <input
@@ -42,13 +56,17 @@ function Category() {
             <Link
               className="relative flex flex-col items-center justify-center group"
               to={`/product/${product.id}`}
+              state={{ products: currentCategoryArray }}
             >
               <span className="absolute z-10 text-xl font-semibold text-center text-white transition-all ease-out group-hover:text-2xl">
-                {" "}
                 {product.name} <br /> {product.price}$
               </span>
 
-              <img className="rounded-md" src={product.img} alt={product.name} />
+              <img
+                className="rounded-md"
+                src={product.img}
+                alt={product.name}
+              />
               <div className="absolute inset-0 bg-gray-900 rounded-md opacity-40"></div>
             </Link>
           </li>

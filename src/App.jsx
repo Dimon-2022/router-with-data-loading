@@ -2,10 +2,10 @@
 /*
   1.	Запустите JSON-сервер (инструкции указаны в видео и в файле links). ++++
   2.	Создайте две отдельные функции fetch для запроса данных категорий и продуктов. +++
-  3.	Удалите старую логику использования данных категорий и продуктов в магазине, заменив её на получение данных с помощью loader в параметрах маршрутизатора.
+  3.	Удалите старую логику использования данных категорий и продуктов в магазине, заменив её на получение данных с помощью loader в параметрах маршрутизатора. +++
   4.	Создайте универсальный обработчик ошибок с помощью errorElement. +++
-  5.	Получите данные с категориями и продуктами от API, используя хук useLoaderData(), и примените их на страницах Home и Category.
-  6.	С помощью state передайте массив продуктов на страницу ProductDetails. Получите данные с помощью хука useLocation() и используйте их для фильтрации конкретного продукта по параметру URL.
+  5.	Получите данные с категориями и продуктами от API, используя хук useLoaderData(), и примените их на страницах Home и Category. +++
+  6.	С помощью state передайте массив продуктов на страницу ProductDetails. Получите данные с помощью хука useLocation() и используйте их для фильтрации конкретного продукта по параметру URL.  +++
 */
 
 //Eng
@@ -25,6 +25,7 @@ import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
+  useRouteError,
 } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -38,7 +39,6 @@ import Thanks from "./pages/Thanks";
 import categoryLoader from "./loaders/categoryLoader";
 import productsLoader from "./loaders/productsLoader";
 
-
 function ErrorBoundary() {
   const error = useRouteError();
   return (
@@ -49,14 +49,17 @@ function ErrorBoundary() {
   );
 }
 
-
-
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
-      { index: true, element: <Home />, loader: categoryLoader, errorElement: <ErrorBoundary/> },
+      {
+        index: true,
+        element: <Home />,
+        loader: categoryLoader,
+        errorElement: <ErrorBoundary />,
+      },
       { path: "old-home", element: <Navigate to={"/"} /> },
       { path: "about", element: <About /> },
       { path: "cart", element: <Cart /> },

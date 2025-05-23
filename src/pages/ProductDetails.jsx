@@ -1,18 +1,22 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 // import { products } from "../data/data";
 
 function ProductDetails() {
   const { productId } = useParams();
 
-  // const product = products.find((p) => p.id === parseInt(productId, 10));
+  const {
+    state: { products },
+  } = useLocation();
 
-  const products =  [];
+  const product = products.find((p) => parseInt(p.id) === parseInt(productId));
 
   return (
     <div className="px-6 py-10">
       {product ? (
         <>
-          <h1 className="mb-6 text-3xl font-semibold text-center">Product Details</h1>
+          <h1 className="mb-6 text-3xl font-semibold text-center">
+            Product Details
+          </h1>
           <div className="flex flex-col items-center p-6 bg-white rounded-md">
             <h2 className="mb-2 text-xl font-semibold">{product.name}</h2>
             <p className="text-lg text-gray-700">Price: {product.price}$</p>
